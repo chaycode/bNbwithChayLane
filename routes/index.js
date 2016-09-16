@@ -10,6 +10,10 @@ function getComments(){
   return knex('comment_tbl')
 }
 
+function getEverything(){
+  return knewx('post_tbl').join('comment_tbl', "post_tbl.id", "comment_tbl.post_id")
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   getPosts()
@@ -51,6 +55,15 @@ router.get('/:id/delete', function(req, res, next){
   .delete()
   .then(function(data){
     res.redirect('/')
+  })
+})
+
+router.post('/:id/comment', function(req, res, next){
+  getComments()
+  .insert({comment: req.body.comment, post_id: req.params.id})
+  .then(function(data){
+    res.redirect('/' + req.params.id)
+    // res.send('success')
   })
 })
 
