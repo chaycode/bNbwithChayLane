@@ -62,7 +62,8 @@ router.post('/:id/comment', function(req, res, next){
   getComments()
   .insert({comment: req.body.comment, post_id: req.params.id})
   .then(function(data){
-    res.redirect('/:id')
+    res.redirect('/' + req.params.id)
+    // res.send('success')
   })
 })
 
